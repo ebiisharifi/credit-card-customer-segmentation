@@ -7,13 +7,6 @@ This is a small end-to-end analytics project: data cleaning, exploration,
 unsupervised clustering, and a supervised model on top. I did it in Python
 (pandas, scikit-learn) with a bit of SQL for the profiling side.
 
-> A note on the background: a first version of this analysis was done in R by a
-> student group that I supervised. I rebuilt the whole thing myself in Python
-> and changed some parts of the method (explained below), so this is my own
-> version, not a copy of the R work.
-
----
-
 ## The data
 
 A public dataset from Kaggle, *Credit Card Dataset for Clustering*. It has about
@@ -41,24 +34,6 @@ Source: https://www.kaggle.com/datasets/arjunbhasin2013/ccdata
 6. **Profile** - describe each group in plain business language.
 7. **Predict** - train a Decision Tree and a Random Forest to classify a
    customer into one of the 4 groups.
-
-### What I changed from the original R version
-
-I wanted this to be my own approach and also a bit better, so:
-
-- **Log transform before scaling.** The money columns are heavily right-skewed,
-  and K-Means uses distance, so a few very large customers were dominating the
-  clusters. A `log1p` transform reduces that. This changed the cluster sizes
-  compared to the R version, which is expected.
-- **A second clustering method as a check.** The original only used K-Means. I
-  added hierarchical clustering on a sample and compared the two with the
-  adjusted Rand index, just to confirm the structure is stable.
-- **Two classifiers instead of one.** I kept the Decision Tree (because you can
-  read its rules and explain it to non-technical people), but I added a Random
-  Forest so I can compare a simple model against a stronger one and talk about
-  the accuracy vs interpretability trade-off.
-
----
 
 ## Key results
 
@@ -105,29 +80,6 @@ and cash-advance behaviour:
 - The active responsible spenders are the best base for loyalty and upsell.
 - The low-activity group is large and basically dormant - an activation campaign
   could move some of them up.
-
----
-
-## Repository structure
-
-```
-credit-card-customer-segmentation/
-├── data/
-│   ├── credit_card_customers.csv      # the raw dataset
-│   ├── cluster_profile.csv            # average of each feature per cluster
-│   └── customers_with_clusters.csv    # data + the cluster label (made by the script)
-├── notebooks/
-│   └── customer_segmentation.ipynb    # the full analysis with explanations
-├── src/
-│   └── analysis.py                    # same pipeline as a script, saves all figures
-├── sql/
-│   ├── customer_segments.sql          # profiling queries in plain SQL
-│   └── run_sql.py                     # loads the data into SQLite and runs them
-├── figures/                           # all generated charts
-├── requirements.txt
-└── README.md
-```
-
 ---
 
 ## How to run it
