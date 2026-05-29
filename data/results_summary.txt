@@ -1,0 +1,6 @@
+K = 4
+cluster sizes: {0: np.int64(2414), 1: np.int64(1518), 2: np.int64(1906), 3: np.int64(3112)}
+hierarchical agreement (adjusted Rand): 0.495
+Decision Tree accuracy: 0.9222, kappa: 0.894
+Random Forest accuracy: 0.9642, kappa: 0.951
+top features: ['PURCHASES_TRX', 'CASH_ADVANCE', 'CASH_ADVANCE_FREQUENCY', 'PURCHASES_FREQUENCY', 'CASH_ADVANCE_TRX']
